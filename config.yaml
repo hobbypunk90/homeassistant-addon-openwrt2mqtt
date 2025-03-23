@@ -1,0 +1,23 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: Luci 2 MQTT
+version: "0.0.1"
+slug: luci2mqtt
+description: Luci add-on to add openwrt information via mqtt.
+url: "https://github.com/hobbypunk90/homeassistant-addon-luci2mqtt"
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+map:
+  - addon_config:rw
+options:
+  password: ""
+  debug: false
+schema:
+  password: password
+  debug: bool
+  root_ca_path: str
+#image: "ghcr.io/home-assistant/{arch}-addon-example"
