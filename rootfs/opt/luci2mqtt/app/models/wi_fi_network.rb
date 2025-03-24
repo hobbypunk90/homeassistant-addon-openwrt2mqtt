@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class WiFiNetwork < ApplicationModel
+  attribute :router
   attribute :device
   attribute :network_name
   attribute :access_point
@@ -8,6 +9,13 @@ class WiFiNetwork < ApplicationModel
   attribute :frequency
   attribute :ht_mode
   attribute :hw_modes
+
+  def wifi_devices
+    @wifi_devices ||= begin
+                        result = GetWiFiDevices.result(wifi_network: self)
+                        result.devices if result.success?
+                      end
+  end
 
   def to_s
     <<~MSG

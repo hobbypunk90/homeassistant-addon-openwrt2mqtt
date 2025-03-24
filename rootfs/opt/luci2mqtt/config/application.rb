@@ -2,10 +2,14 @@
 
 require_relative 'environment'
 
-result = GetDevice.result
-
+result = GetRouter.result
 exit(1) unless result.success?
 
-puts "#{result.device}\n"
+router = result.router
+puts "#{router}\n"
+puts "#{router.wifi_devices.size}\n"
 
-puts "#{result.device.wifi_networks.join("\n")}"
+wifi_network = router.wifi_networks[4]
+puts "#{wifi_network}"
+
+puts "#{wifi_network.wifi_devices.join("\n\n")}"

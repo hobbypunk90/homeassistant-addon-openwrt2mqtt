@@ -2,17 +2,18 @@
 
 class Internal::ParseBoard < Actor
   input :board
-  output :device
+  output :router
 
   def call
-    self.device = device = Device.new
-    device.kernel = board[:kernel]
-    device.hostname = board[:hostname]
-    device.system = board[:system]
-    device.model = board[:model]
-    device.board_name = board[:board_name]
-    device.os = board[:release][:distribution]
-    device.os_version = board[:release][:version]
-    device.build_date = Time.at(board[:release][:builddate].to_i).to_datetime
+    self.router = router = Router.new
+    router.kernel = board[:kernel]
+    router.hostname = board[:hostname]
+    router.system = board[:system]
+    router.manufacturer = board[:model].split(' ').first
+    router.model = board[:model].split(' ').last
+    router.board_name = board[:board_name]
+    router.os = board[:release][:distribution]
+    router.os_version = board[:release][:version]
+    router.build_date = Time.at(board[:release][:builddate].to_i).to_datetime
   end
 end

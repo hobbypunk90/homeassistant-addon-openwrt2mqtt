@@ -2,10 +2,10 @@
 
 class Internal::ParseSystemInfo < Actor
   input :system_info
-  input :device
+  input :router
 
   def call
-    device.localtime = Time.at(system_info[:localtime].to_i).to_datetime
-    device.uptime = ActiveSupport::Duration.build(system_info[:uptime].to_i)
+    router.localtime = Time.at(system_info[:localtime].to_i).to_datetime
+    router.uptime = ActiveSupport::Duration.build(system_info[:uptime].to_i)
   end
 end

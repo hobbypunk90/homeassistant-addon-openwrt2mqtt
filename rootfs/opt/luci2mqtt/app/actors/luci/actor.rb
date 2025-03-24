@@ -5,7 +5,7 @@ class Luci::Actor < Actor
     connection.get("/#{path}", options)
   end
 
-  def post(path, method:, params:)
+  def post(path, method:, params: [])
     path = "#{path}?auth=#{auth_token}" if auth_token
 
     response = connection.post("/#{path}", { id:, method:, params: }.to_json)

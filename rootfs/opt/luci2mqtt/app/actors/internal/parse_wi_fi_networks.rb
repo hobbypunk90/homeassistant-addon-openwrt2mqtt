@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Internal::ParseWiFiNetworks < Actor
+  input :router
   input :plain_text_networks
   output :networks
 
@@ -12,6 +13,7 @@ class Internal::ParseWiFiNetworks < Actor
 
   def parse_wifi_network(text)
     wifi = WiFiNetwork.new
+    wifi.router = router
     wifi.device = text[/^([a-z0-9\-]+)/, 1]
     wifi.network_name = text[/ESSID: "(.+)"$/, 1]
     wifi.access_point = text[/Access Point: ([0-9A-F:]+)/, 1]

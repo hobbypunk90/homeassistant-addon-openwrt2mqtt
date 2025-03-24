@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GetDevice < Actor
+class GetRouter < Actor
   play Luci::Internal::Login,
        Luci::Internal::GetSystemBoard,
        Luci::Internal::GetSystemInfo,
