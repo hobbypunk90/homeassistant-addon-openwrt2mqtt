@@ -17,6 +17,21 @@ class WiFiNetwork < ApplicationModel
                       end
   end
 
+  def identifier
+    @identifier ||= Digest::SHA1.hexdigest("#{device},#{network_name},#{access_point}")
+  end
+
+  def discovery_device
+    {
+      configuration_url: Settings.luci.url,
+      identifiers: identifier,
+      hw_version: access_point,
+      model: network_name,
+      name: "#{network_name}[#{frequency} GHz]",
+      via_device: router.identifier
+    }
+  end
+
   def to_s
     <<~MSG
       WiFiNetwork[#{device}]: <#{network_name}>

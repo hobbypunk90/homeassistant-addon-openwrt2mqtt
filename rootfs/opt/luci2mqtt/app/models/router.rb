@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Router < ApplicationModel
+  include MQTTable
+
   attribute :kernel
   attribute :hostname
   attribute :system
@@ -13,6 +15,18 @@ class Router < ApplicationModel
 
   attribute :localtime
   attribute :uptime
+
+  mqtt_origin name: 'OpenWRT2mqtt',
+              sw_version: 'dev',
+              url: 'https://github.com/hobbypunk90/homeassistant-addon-luci2mqtt'
+  mqtt_device configuration_url: Settings.luci.url,
+              manufacturer: :manufacturer,
+              model: :model,
+              model_id: :board_name,
+              name: :hostname,
+              sw_version: -> { "#{os} #{os_version}" }
+  mqtt_attribute :uptime, :sensor, device_class: :duration, unit_of_measurement: :s
+  mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }, device_class: :duration
 
   def wifi_networks
     @wifi_networks ||= begin
@@ -28,17 +42,15 @@ class Router < ApplicationModel
                       end
   end
 
-  def discovery
-
+  def identifier(_identifier)
+    super Digest::SHA1.hexdigest(wifi_networks.map(&:identifier).sort.join(','))
   end
 
-  def identifier
-    @identifier ||= Digest::SHA1.hexdigest(wifi_networks.map(&:access_point).sort.join(','))
-  end
+
   def discovery_device
     {
       configuration_url: Settings.luci.url,
-      identifiers: [identifier],
+      identifiers: identifier(nil),
       manufacturer:,
       model:,
       model_id: board_name,

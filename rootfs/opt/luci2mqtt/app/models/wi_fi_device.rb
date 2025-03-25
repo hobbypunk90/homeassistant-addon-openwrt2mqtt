@@ -10,6 +10,21 @@ class WiFiDevice < ApplicationModel
 
   attribute :wifi_network
 
+  def identifier
+    @identifier ||= Digest::SHA1.hexdigest(mac_address)
+  end
+
+  def discovery_device
+    {
+      connections: [['mac', mac_address]],
+      identifiers: identifier,
+      hw_version: access_point,
+      model: network_name,
+      name: hostname,
+      via_device: wifi_network.identifier
+    }
+  end
+
   def to_s
     <<~MSG
       WiFiDevice[#{mac_address}]: <#{hostname}>

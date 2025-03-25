@@ -13,7 +13,10 @@ root = "#{__dir__}/../app"
 Dir.entries(root)
    .select { |entry| File.directory? File.join(root, entry) and not %w[. ..].include? entry}
    .map { |entry| File.join(root, entry) }
-   .each { |directory| loader.push_dir(directory) }
+   .each do |directory|
+     loader.push_dir(directory)
+     loader.collapse(File.join(directory, 'concerns'))
+   end
 loader.setup # ready!
 
 Dir.glob("#{__dir__}/initializers/*.rb").each { |file| require_relative file }

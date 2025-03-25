@@ -7,7 +7,6 @@ exit(1) unless result.success?
 
 router = result.router
 puts "#{router}\n"
-puts "#{router.wifi_devices.size}\n"
 
 wifi_network = router.wifi_networks[4]
 puts "#{wifi_network}"
