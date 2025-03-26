@@ -17,8 +17,11 @@ class WiFiNetwork < ApplicationModel
               manufacturer: :manufacturer,
               model: :model,
               model_id: :device,
-              via_device: -> { :identifier },
+              via_device: -> { router.identifier },
               sw_version: -> { "#{os} #{os_version}" }
+  mqtt_attribute :network_name, :sensor
+  mqtt_attribute :device, :sensor
+  mqtt_attribute :frequency, :sensor, device_class: :frequency, unit_of_measurement: :GHz
   mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }
   mqtt_attribute :mac_address, :sensor, :access_point
   mqtt_attribute :channel, :sensor
