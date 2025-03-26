@@ -24,6 +24,7 @@ class Router < ApplicationModel
               sw_version: -> { "#{os} #{os_version}" }
   mqtt_attribute :uptime, :sensor, device_class: :duration, unit_of_measurement: :s
   mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }
+  mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }
 
   def wifi_networks
     @wifi_networks.values
