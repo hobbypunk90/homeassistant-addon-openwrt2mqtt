@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Luci::Internal::GetHostHints < Luci::Actor
+  prepend WhosGonnaCallMe
+
   input :auth_token
   output :host_hints
 

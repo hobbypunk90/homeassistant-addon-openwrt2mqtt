@@ -16,9 +16,6 @@ class Router < ApplicationModel
   attribute :localtime
   attribute :uptime
 
-  mqtt_origin name: 'OpenWRT2mqtt',
-              sw_version: 'dev',
-              url: 'https://github.com/hobbypunk90/homeassistant-addon-luci2mqtt'
   mqtt_device configuration_url: Settings.luci.url,
               manufacturer: :manufacturer,
               model: :model,
@@ -26,37 +23,37 @@ class Router < ApplicationModel
               name: :hostname,
               sw_version: -> { "#{os} #{os_version}" }
   mqtt_attribute :uptime, :sensor, device_class: :duration, unit_of_measurement: :s
-  mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }, device_class: :duration
+  mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }
 
   def wifi_networks
-    @wifi_networks ||= begin
-                         result = GetWiFiNetworks.result(router: self)
+    @wifi_networks.values
+  end
 
-                         result.networks if result.success?
-                       end
+  def add_wifi_network(network)
+    (@wifi_networks ||= {})[network.identifier] = network
   end
 
   def wifi_devices
-    @wifi_devices ||= begin
-                        wifi_networks.map(&:wifi_devices).flatten
-                      end
+    @wifi_devices.values
   end
 
-  def identifier(_identifier)
+  def add_wifi_device(device)
+    (@wifi_devices ||= {})[device.identifier] = device
+  end
+
+
+  def identifier(_identifier = nil)
     super Digest::SHA1.hexdigest(wifi_networks.map(&:identifier).sort.join(','))
   end
 
+  def discover_all
+    discover
+    wifi_networks.each(&:discover_all)
+  end
 
-  def discovery_device
-    {
-      configuration_url: Settings.luci.url,
-      identifiers: identifier(nil),
-      manufacturer:,
-      model:,
-      model_id: board_name,
-      name: hostname,
-      sw_version: "#{os} #{os_version}"
-    }
+  def publish_all
+    publish
+    wifi_networks.each(&:publish_all)
   end
 
   def to_s

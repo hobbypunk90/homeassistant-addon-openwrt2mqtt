@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Internal::ParseSystemInfo < Actor
+  prepend WhosGonnaCallMe
+
   input :system_info
   input :router
 

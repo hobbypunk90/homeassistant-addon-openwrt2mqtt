@@ -10,6 +10,11 @@ class WiFiDevice < ApplicationModel
 
   attribute :wifi_network
 
+  def wifi_network=(wifi_network)
+    super
+    wifi_network.add_wifi_device(self)
+  end
+
   def identifier
     @identifier ||= Digest::SHA1.hexdigest(mac_address)
   end

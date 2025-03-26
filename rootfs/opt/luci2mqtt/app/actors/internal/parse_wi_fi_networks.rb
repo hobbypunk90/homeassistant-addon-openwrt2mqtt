@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Internal::ParseWiFiNetworks < Actor
+  prepend WhosGonnaCallMe
+
   input :router
   input :plain_text_networks
   output :networks
@@ -13,7 +15,6 @@ class Internal::ParseWiFiNetworks < Actor
 
   def parse_wifi_network(text)
     wifi = WiFiNetwork.new
-    wifi.router = router
     wifi.device = text[/^([a-z0-9\-]+)/, 1]
     wifi.network_name = text[/ESSID: "(.+)"$/, 1]
     wifi.access_point = text[/Access Point: ([0-9A-F:]+)/, 1]
@@ -21,6 +22,7 @@ class Internal::ParseWiFiNetworks < Actor
     wifi.frequency = text[/Channel: ([0-9]+) \(([0-9.]+) GHz\)\s+HT Mode: ([A-Z0-9]+)/, 2]
     wifi.ht_mode = text[/Channel: ([0-9]+) \(([0-9.]+) GHz\)\s+HT Mode: ([A-Z0-9]+)/, 3]
     wifi.hw_modes = text[/HW Mode\(s\): ([\S]+)/, 1]
+    wifi.router = router
 
     wifi
   end

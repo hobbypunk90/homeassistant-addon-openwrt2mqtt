@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Luci::Internal::GetSystemInfo < Luci::Actor
+  prepend WhosGonnaCallMe
+
   input :auth_token
   output :system_info
 

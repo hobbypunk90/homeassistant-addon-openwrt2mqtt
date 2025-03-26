@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Luci::Internal::GetSystemBoard < Luci::Actor
+  prepend WhosGonnaCallMe
+
   input :auth_token
   output :board
 

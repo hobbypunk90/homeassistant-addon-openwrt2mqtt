@@ -5,6 +5,10 @@ module MQTTable
   def self.included(base)
     # base is our target class. Invoke `extend` on it and pass nested module with class methods.
     base.extend ClassMethods
+
+    base.mqtt_origin name: 'OpenWRT2mqtt',
+                     sw_version: 'dev',
+                     url: 'https://github.com/hobbypunk90/homeassistant-addon-luci2mqtt'
   end
 
   module ClassMethods
@@ -22,8 +26,9 @@ module MQTTable
       self._mqtt_components = {} unless _mqtt_components
 
       _mqtt_components[attribute] = {
+        name: attribute.to_s.humanize,
         value:,
-        plattform: type,
+        platform: type,
         **options
       }
     end
@@ -37,6 +42,13 @@ module MQTTable
     @identifier ||= "#{self.class.name.downcase}_#{identifier}"
   end
 
+  def discover
+    Mqtt::Discover.call(object: self)
+  end
+
+  def publish
+    Mqtt::Publish.call(object: self)
+  end
 
   def discovery_topic
     "#{Settings.mqtt.topics.discovery}/device/#{identifier(nil)}/config"
@@ -85,12 +97,15 @@ module MQTTable
   def attribute_value(attribute)
     value = mqtt_components[attribute][:value]
 
-    if value.is_a? Symbol
-      send(value)
-    elsif value.is_a? Proc
-      instance_exec(&value)
-    else
-      value
-    end
+    value = if value.is_a? Symbol
+              send(value)
+            elsif value.is_a? Proc
+              instance_exec(&value)
+            else
+              value
+            end
+    return value.to_json if value.is_a?(Hash) || value.is_a?(Array)
+
+    value
   end
 end

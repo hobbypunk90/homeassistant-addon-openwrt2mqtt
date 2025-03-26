@@ -2,7 +2,7 @@
 
 require_relative 'environment'
 
-result = GetRouter.result
+result = LoadAll.result
 exit(1) unless result.success?
 
 router = result.router

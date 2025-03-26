@@ -4,7 +4,6 @@ source "https://rubygems.org"
 
 gem "mqtt", "~> 0.6.0"
 
-
 gem "config", "~> 5.5"
 
 gem "service_actor", "~> 4.0"

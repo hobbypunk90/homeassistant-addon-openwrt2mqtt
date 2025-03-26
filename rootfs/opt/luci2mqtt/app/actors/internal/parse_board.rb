@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Internal::ParseBoard < Actor
+  prepend WhosGonnaCallMe
+
   input :board
   output :router
 

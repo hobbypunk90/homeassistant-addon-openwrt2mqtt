@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Luci::Internal::GetWiFiDevices < Luci::Actor
+  prepend WhosGonnaCallMe
+
   input :auth_token
   input :wifi_network
   output :plain_text_devices
