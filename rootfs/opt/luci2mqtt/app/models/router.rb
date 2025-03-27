@@ -49,12 +49,12 @@ class Router < ApplicationModel
 
   def discover_all
     discover
-    wifi_networks.each(&:discover_all)
+    wifi_networks.filter(&:discoverable?).each(&:discover_all)
   end
 
   def publish_all
     publish
-    wifi_networks.each(&:publish_all)
+    wifi_networks.filter(&:discoverable?).each(&:publish_all)
   end
 
   def to_s

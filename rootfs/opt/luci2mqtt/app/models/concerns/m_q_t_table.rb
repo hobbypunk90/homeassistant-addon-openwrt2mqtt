@@ -39,7 +39,11 @@ module MQTTable
   alias mqtt_components _mqtt_components
 
   def identifier(identifier)
-    @identifier ||= "#{self.class.name.downcase}_#{identifier}"
+    @identifier ||= "#{self.class.name.downcase}/#{identifier}"
+  end
+
+  def discoverable?
+    true
   end
 
   def discover

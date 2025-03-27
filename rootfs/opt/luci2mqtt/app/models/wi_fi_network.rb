@@ -4,6 +4,7 @@ class WiFiNetwork < ApplicationModel
   include MQTTable
 
   attribute :router
+
   attribute :device
   attribute :network_name
   attribute :access_point
@@ -50,12 +51,12 @@ class WiFiNetwork < ApplicationModel
 
   def discover_all
     discover
-    #wifi_devices.each(&:discover)
+    wifi_devices.filter(&:discoverable?).each(&:discover)
   end
 
   def publish_all
     publish
-    #wifi_devices.each(&:publish)
+    wifi_devices.filter(&:discoverable?).each(&:publish)
   end
 
   def to_s

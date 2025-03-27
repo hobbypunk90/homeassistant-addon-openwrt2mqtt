@@ -18,4 +18,8 @@ class Mqtt::Actor < Actor
   def publish(topic, payload)
     client.publish(topic, payload, retain)
   end
+
+  def get(topic)
+    client.get(topic)
+  end
 end
