@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Internal::ParseWiFiNetworks < Actor
+class Internal::ParseWiFiNetworks < ApplicationActor
   prepend WhosGonnaCallMe
 
   input :router

@@ -10,7 +10,6 @@ class Luci::Internal::Login < Luci::Actor
     )
 
     raise StandardError if auth_token.nil?
-
   rescue StandardError => e
     fail!(error: 'Login failed')
     raise e

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Internal::ParseBoard < Actor
+class Internal::ParseBoard < ApplicationActor
   prepend WhosGonnaCallMe
 
   input :board

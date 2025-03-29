@@ -11,3 +11,6 @@ mqtt:
   topics:
     discovery: homeassistant
     base: luci2mqtt
+mac_resolver:
+  url: https://www.macvendorlookup.com/
+debug: false

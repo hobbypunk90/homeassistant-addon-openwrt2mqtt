@@ -10,6 +10,7 @@ class WiFiDevice < ApplicationModel
   attribute :ipv4_address
   attribute :ipv6_address
   attribute :last_seen_ago
+  attribute :labels
 
   mqtt_device configuration_url: Settings.luci.url,
               name: :hostname,
@@ -20,6 +21,7 @@ class WiFiDevice < ApplicationModel
   mqtt_attribute :mac_address, :sensor
   mqtt_attribute :ip_address, :sensor, -> { ipv4_address || ipv6_address }
   mqtt_attribute :last_seen_ago, :sensor, device_class: :duration, unit_of_measurement: :s
+  mqtt_attribute :label, :sensor, -> { labels&.first }, attributes: -> { { labels: } }
 
   def wifi_network=(wifi_network)
     super
@@ -27,7 +29,7 @@ class WiFiDevice < ApplicationModel
   end
 
   def identifier(_identifier = nil)
-    @identifier ||= Digest::SHA1.hexdigest(mac_address)
+    super Digest::SHA1.hexdigest(mac_address)
   end
 
   def discoverable?

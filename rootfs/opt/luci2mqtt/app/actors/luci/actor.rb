@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Luci::Actor < Actor
+class Luci::Actor < ApplicationActor
   def get(path, options)
     connection.get("/#{path}", options)
   end
@@ -23,9 +23,8 @@ class Luci::Actor < Actor
   end
 
   def connection
-    @connection ||= Faraday.new(Settings.luci.url)
-  end
-  def logger
-    @logger ||= Logger.new($stdout)
+    @connection ||= Faraday.new(Settings.luci.url)do |faraday|
+      faraday.response :logger if Settings.debug
+    end
   end
 end

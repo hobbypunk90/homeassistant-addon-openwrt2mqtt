@@ -5,10 +5,26 @@ class GetMacVendor < Actor
   output :vendor_name
 
   def call
-    vendor_id = mac_address.split(/[:-]/)[0..2].join('')
+    vendor_id = mac_address.split(/[:-]/)[0..3].join(':')
 
-    line = File.foreach('./vendors/mac_vendors.csv').grep(/#{vendor_id}/)[0]
-    return if line.nil?
-    self.vendor_name = line.split(',')[2].gsub('"', '')
+    vendors = get(vendor_id)
+    return if vendors.nil?
+
+    self.vendor_name = vendors.first[:company]
+  end
+
+  private
+
+  def connection
+    @connection ||= Faraday.new(Settings.mac_resolver.url)do |faraday|
+      faraday.response :logger if Settings.debug
+    end
+  end
+
+  def get(mac_address, options = {})
+    response = connection.get("/api/v2/#{mac_address}", options)
+    return if response.body.empty?
+
+    JSON.parse(response.body).map(&:with_indifferent_access)
   end
 end

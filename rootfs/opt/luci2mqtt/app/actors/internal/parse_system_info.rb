@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Internal::ParseSystemInfo < Actor
+class Internal::ParseSystemInfo < ApplicationActor
   prepend WhosGonnaCallMe
 
   input :system_info

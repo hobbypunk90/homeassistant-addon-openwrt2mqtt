@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Mqtt::Actor < Actor
+class Mqtt::Actor < ApplicationActor
   def client
     @@client = MQTT::Client.connect(
       host: Settings.mqtt.host,
