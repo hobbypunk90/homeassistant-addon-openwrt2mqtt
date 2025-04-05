@@ -17,8 +17,8 @@ class Internal::ParseBoard < ApplicationActor
     router.kernel = board[:kernel]
     router.hostname = board[:hostname]
     router.system = board[:system]
-    router.manufacturer = board[:model].split(' ').first
-    router.model = board[:model].split(' ').last
+    router.manufacturer = board[:model].split(" ").first
+    router.model = board[:model].split(" ").last
     router.board_name = board[:board_name]
     router.os = board[:release][:distribution]
     router.os_version = board[:release][:version]

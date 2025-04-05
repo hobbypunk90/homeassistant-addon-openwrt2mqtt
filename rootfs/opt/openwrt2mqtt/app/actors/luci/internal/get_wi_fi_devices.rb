@@ -8,9 +8,9 @@ class Luci::Internal::GetWiFiDevices < Luci::Actor
   output :plain_text_devices
 
   def call
-    response = post('cgi-bin/luci/rpc/sys', method: :exec, params: ["iwinfo #{wifi_network.device} assoclist"])
+    response = post("cgi-bin/luci/rpc/sys", method: :exec, params: ["iwinfo #{wifi_network.device} assoclist"])
                  .strip
-    if(response == 'No station connected')
+    if response == "No station connected"
       self.plain_text_devices = []
     else
       self.plain_text_devices = response.split("\n\n")

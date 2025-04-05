@@ -5,7 +5,7 @@ class GetMacVendor < Actor
   output :vendor_name
 
   def call
-    vendor_id = mac_address.split(/[:-]/)[0..3].join(':')
+    vendor_id = mac_address.split(/[:-]/)[0..3].join(":")
 
     vendors = get(vendor_id)
     return if vendors.nil?
@@ -16,7 +16,7 @@ class GetMacVendor < Actor
   private
 
   def connection
-    @connection ||= Faraday.new(Settings.mac_resolver.url)do |faraday|
+    @connection ||= Faraday.new(Settings.mac_resolver.url) do |faraday|
       faraday.response :logger if Settings.debug
     end
   end

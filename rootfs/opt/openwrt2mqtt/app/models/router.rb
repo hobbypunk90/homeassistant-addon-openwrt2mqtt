@@ -56,7 +56,7 @@ class Router < ApplicationRecord
         System: #{system}, Kernel: #{kernel}
         OS: #{os} Version: #{os_version}
         Build date: #{build_date}
-        
+
         Localtime: #{localtime}, Uptime: #{uptime.inspect}
     MSG
   end

@@ -7,6 +7,6 @@ class Luci::Internal::GetWiFiNetworks < Luci::Actor
   output :plain_text_networks
 
   def call
-    self.plain_text_networks = post('cgi-bin/luci/rpc/sys', method: :exec, params: ['iwinfo']).split("\n\n")
+    self.plain_text_networks = post("cgi-bin/luci/rpc/sys", method: :exec, params: ["iwinfo"]).split("\n\n")
   end
 end

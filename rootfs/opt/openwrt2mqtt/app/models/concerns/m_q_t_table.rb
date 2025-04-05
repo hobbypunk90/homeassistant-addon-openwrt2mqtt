@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 module MQTTable
-
   def self.included(base)
     # base is our target class. Invoke `extend` on it and pass nested module with class methods.
     base.extend ClassMethods
 
-    base.mqtt_origin name: 'OpenWRT2mqtt',
-                     sw_version: 'dev',
-                     url: 'https://github.com/hobbypunk90/homeassistant-addon-luci2mqtt'
+    base.mqtt_origin name: "OpenWRT 2 MQTT",
+                     sw_version: "dev",
+                     url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
   end
 
   module ClassMethods
@@ -87,7 +86,7 @@ module MQTTable
       attributes = config[:attributes]
       [
         unique_id,
-        config.filter { |key,_v| [:value, :attributes].exclude?(key) }.merge({
+        config.filter { |key, _v| [:value, :attributes].exclude?(key) }.merge({
           unique_id:,
           state_topic: attribute_topic(attribute),
           value_template: ("{{ value_json.state }}" if attributes),

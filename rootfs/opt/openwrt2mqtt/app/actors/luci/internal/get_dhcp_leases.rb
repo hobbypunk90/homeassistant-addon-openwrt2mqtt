@@ -7,7 +7,7 @@ class Luci::Internal::GetDhcpLeases < Luci::Actor
   output :dhcp_static_leases
 
   def call
-    self.dhcp_static_leases = post('cgi-bin/luci/rpc/uci', method: :get_all, params: [:dhcp])
-                                .filter { |_key, value| value['.type'] == 'host' }.values
+    self.dhcp_static_leases = post("cgi-bin/luci/rpc/uci", method: :get_all, params: [:dhcp])
+                                .filter { |_key, value| value[".type"] == "host" }.values
   end
 end

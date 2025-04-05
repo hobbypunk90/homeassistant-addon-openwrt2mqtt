@@ -12,7 +12,7 @@ class Luci::Actor < ApplicationActor
     response = JSON.parse(response.body).with_indifferent_access
     return response[:result] if response[:error].nil?
 
-    raise NoMethodError if response[:error][:message] == 'Method not found.'
+    raise NoMethodError if response[:error][:message] == "Method not found."
     raise StandardError, response[:error][:message]
   end
 
@@ -23,7 +23,7 @@ class Luci::Actor < ApplicationActor
   end
 
   def connection
-    @connection ||= Faraday.new(Settings.openwrt.url)do |faraday|
+    @connection ||= Faraday.new(Settings.openwrt.url) do |faraday|
       faraday.response :logger if Settings.debug
     end
   end

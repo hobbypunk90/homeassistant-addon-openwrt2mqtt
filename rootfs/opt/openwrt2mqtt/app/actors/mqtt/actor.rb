@@ -18,16 +18,4 @@ class Mqtt::Actor < ApplicationActor
   def publish(topic, payload)
     client.publish(topic, payload, retain)
   end
-
-  def get(topic)
-    entries = []
-    Timeout::timeout(0.5) do
-      client.get(topic) do |topic,payload|
-        entries << [topic, payload]
-      end
-    end
-  rescue Timeout::Error
-  ensure
-    entries
-  end
 end
