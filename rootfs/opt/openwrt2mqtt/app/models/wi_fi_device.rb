@@ -35,3 +35,33 @@ class WiFiDevice < ApplicationRecord
     MSG
   end
 end
+
+# ## Schema Information
+#
+# Table name: `wi_fi_devices`
+#
+# ### Columns
+#
+# Name                    | Type               | Attributes
+# ----------------------- | ------------------ | ---------------------------
+# **`id`**                | `string`           | `not null, primary key`
+# **`hostname`**          | `string`           |
+# **`ipv4_address`**      | `string`           |
+# **`ipv6_address`**      | `string`           |
+# **`labels`**            | `json`             | `not null`
+# **`last_seen_at`**      | `datetime`         |
+# **`mac_address`**       | `string`           |
+# **`created_at`**        | `datetime`         | `not null`
+# **`updated_at`**        | `datetime`         | `not null`
+# **`wi_fi_network_id`**  | `string`           | `not null`
+#
+# ### Indexes
+#
+# * `index_wi_fi_devices_on_wi_fi_network_id`:
+#     * **`wi_fi_network_id`**
+#
+# ### Foreign Keys
+#
+# * `wi_fi_network_id`:
+#     * **`wi_fi_network_id => wi_fi_networks.id`**
+#

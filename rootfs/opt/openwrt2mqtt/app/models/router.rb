@@ -1,22 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: routers
-#
-#  id           :string           not null, primary key
-#  board_name   :string
-#  build_date   :datetime
-#  hostname     :string
-#  kernel       :string
-#  manufacturer :string
-#  model        :string
-#  os           :string
-#  os_version   :string
-#  system       :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#
 class Router < ApplicationRecord
   include MQTTable
 
@@ -61,3 +44,25 @@ class Router < ApplicationRecord
     MSG
   end
 end
+
+# ## Schema Information
+#
+# Table name: `routers`
+#
+# ### Columns
+#
+# Name                | Type               | Attributes
+# ------------------- | ------------------ | ---------------------------
+# **`id`**            | `string`           | `not null, primary key`
+# **`board_name`**    | `string`           |
+# **`build_date`**    | `datetime`         |
+# **`hostname`**      | `string`           |
+# **`kernel`**        | `string`           |
+# **`manufacturer`**  | `string`           |
+# **`model`**         | `string`           |
+# **`os`**            | `string`           |
+# **`os_version`**    | `string`           |
+# **`system`**        | `string`           |
+# **`created_at`**    | `datetime`         | `not null`
+# **`updated_at`**    | `datetime`         | `not null`
+#

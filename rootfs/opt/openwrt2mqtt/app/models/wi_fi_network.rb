@@ -1,29 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: wi_fi_networks
-#
-#  id           :string           not null, primary key
-#  access_point :string
-#  channel      :integer
-#  device       :string
-#  frequency    :decimal(4, 3)
-#  ht_mode      :string
-#  hw_modes     :string
-#  network_name :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  router_id    :string           not null
-#
-# Indexes
-#
-#  index_wi_fi_networks_on_router_id  (router_id)
-#
-# Foreign Keys
-#
-#  router_id  (router_id => routers.id)
-#
 class WiFiNetwork < ApplicationRecord
   include MQTTable
 
@@ -70,3 +46,34 @@ class WiFiNetwork < ApplicationRecord
     MSG
   end
 end
+
+# ## Schema Information
+#
+# Table name: `wi_fi_networks`
+#
+# ### Columns
+#
+# Name                | Type               | Attributes
+# ------------------- | ------------------ | ---------------------------
+# **`id`**            | `string`           | `not null, primary key`
+# **`access_point`**  | `string`           |
+# **`channel`**       | `integer`          |
+# **`device`**        | `string`           |
+# **`frequency`**     | `decimal(4, 3)`    |
+# **`ht_mode`**       | `string`           |
+# **`hw_modes`**      | `string`           |
+# **`network_name`**  | `string`           |
+# **`created_at`**    | `datetime`         | `not null`
+# **`updated_at`**    | `datetime`         | `not null`
+# **`router_id`**     | `string`           | `not null`
+#
+# ### Indexes
+#
+# * `index_wi_fi_networks_on_router_id`:
+#     * **`router_id`**
+#
+# ### Foreign Keys
+#
+# * `router_id`:
+#     * **`router_id => routers.id`**
+#
