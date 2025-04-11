@@ -23,16 +23,6 @@ class Router < ApplicationRecord
     self.id = Digest::SHA1.hexdigest("#{Settings.openwrt.url},#{Settings.openwrt.username}")
   end
 
-  def discover_all
-    discover
-    wifi_networks.filter(&:discoverable?).each(&:discover_all)
-  end
-
-  def publish_all
-    publish
-    wifi_networks.filter(&:discoverable?).each(&:publish_all)
-  end
-
   def to_s
     <<~MSG
       Device[#{hostname}]: <#{model}>

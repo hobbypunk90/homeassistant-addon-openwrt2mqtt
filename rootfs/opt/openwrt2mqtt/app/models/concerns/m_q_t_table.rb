@@ -23,11 +23,13 @@ module MQTTable
 
     def mqtt_attribute(attribute, type, value = attribute, **options)
       self._mqtt_components = {} unless _mqtt_components
+      value = -> { send(attribute).iso8601 } if options[:device_class] == :timestamp && value == attribute
 
       _mqtt_components[attribute] = {
         name: attribute.to_s.humanize,
         value:,
         platform: type,
+        if: -> { true },
         **options
       }
     end
@@ -45,14 +47,6 @@ module MQTTable
 
   def discoverable?
     true
-  end
-
-  def discover
-    Mqtt::Discover.call(object: self)
-  end
-
-  def publish
-    Mqtt::Publish.call(object: self)
   end
 
   def discovery_topic
@@ -81,17 +75,23 @@ module MQTTable
   end
 
   def discovery_components
-    mqtt_components.to_h do |attribute, config|
+    mqtt_components.filter {|_, config| instance_exec(&config[:if])}.to_h do |attribute, config|
       unique_id = "#{mqtt_id}_#{attribute}"
+      name = if config[:platform] == :device_tracker
+               labels&.first { |label| label.start_with?("device_tracker.")&.gsub("device_tracker.", "") } ||
+                 hostname
+             end
       attributes = config[:attributes]
       [
         unique_id,
-        config.filter { |key, _v| [:value, :attributes].exclude?(key) }.merge({
+        config.filter { |key, _v| [:value, :attributes, :if].exclude?(key) }.merge({
           unique_id:,
+          name:,
           state_topic: attribute_topic(attribute),
           value_template: ("{{ value_json.state }}" if attributes),
           json_attributes_topic: (attribute_topic(attribute) if attributes),
-          json_attributes_template: ("{{ value_json.attributes }}" if attributes)
+          json_attributes_template: ("{{ value_json.attributes }}" if attributes),
+          source_type: (:router if config[:platform] == :device_tracker)
         }.compact)
       ]
     end
@@ -114,6 +114,10 @@ module MQTTable
             else
               value
             end
+    if mqtt_components[attribute][:platform] == :binary_sensor
+      value = value ? "ON" : "OFF"
+    end
+
     if attributes.nil?
       return value.to_json if value.is_a?(Hash) || value.is_a?(Array)
       return value
@@ -127,6 +131,6 @@ module MQTTable
                    attributes
                  end
 
-    { state: value, attributes: attributes.to_json }.to_json
+    { state: value, attributes: attributes.to_json }
   end
 end

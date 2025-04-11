@@ -28,16 +28,6 @@ class WiFiNetwork < ApplicationRecord
     self.id = Digest::SHA1.hexdigest("#{device},#{network_name},#{access_point}")
   end
 
-  def discover_all
-    discover
-    wifi_devices.filter(&:discoverable?).each(&:discover)
-  end
-
-  def publish_all
-    publish
-    wifi_devices.filter(&:discoverable?).each(&:publish)
-  end
-
   def to_s
     <<~MSG
       WiFiNetwork[#{device}]: <#{network_name}>

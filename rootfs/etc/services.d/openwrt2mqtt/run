@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start the example service
+# s6-overlay docs: https://github.com/just-containers/s6-overlay
+# ==============================================================================
+
+# Add your code here
+
+# Declare variables
+declare password
+declare debug
+declare root_ca_path
+
+## Get the 'message' key from the user config options.
+password=$(bashio::config 'password')
+debug=$(bashio::config 'debug')
+root_ca_path=$(bashio::config 'root_ca_path')
+
+bashio::log.info 'Start OpenWRT 2 MQTT ...'
+/opt/openwrt2mqtt/bin/rails server

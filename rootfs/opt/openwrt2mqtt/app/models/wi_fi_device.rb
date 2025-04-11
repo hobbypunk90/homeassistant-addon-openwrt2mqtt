@@ -12,11 +12,18 @@ class WiFiDevice < ApplicationRecord
               model_id: :mac_address,
               via_device: -> { wifi_network.mqtt_id }
 
-  mqtt_attribute :mac_address, :sensor
-  mqtt_attribute :ip_address, :sensor, -> { ipv4_address || ipv6_address }
-  mqtt_attribute :last_seen_at, :sensor, device_class: :timestamp
-  mqtt_attribute :label, :sensor, -> { labels&.first }, attributes: -> { { labels: } }
-
+  mqtt_attribute :mac_address, :sensor, entity_category: :diagnostic
+  mqtt_attribute :ip_address, :sensor, -> { ipv4_address || ipv6_address }, entity_category: :diagnostic
+  mqtt_attribute :last_seen_at, :sensor, device_class: :timestamp, entity_category: :diagnostic
+  mqtt_attribute :label, :sensor, -> { labels&.first }, attributes: -> { { labels: } }, entity_category: :diagnostic
+  mqtt_attribute :online, :binary_sensor, -> { last_seen_at > 2.minutes.ago }, device_class: :connectivity
+  mqtt_attribute :state, :device_tracker, -> { last_seen_at > 2.minutes.ago ? :home : :not_home },
+                 attributes: -> { {
+                   mac_address:,
+                   ip_address: ipv4_address || ipv6_address,
+                   hostname:
+                 } },
+                 if: -> { labels&.any? { |label| label.start_with?("device_tracker") } }
   validates :labels, presence: true, if: -> { labels.nil? }
 
   before_validation do
