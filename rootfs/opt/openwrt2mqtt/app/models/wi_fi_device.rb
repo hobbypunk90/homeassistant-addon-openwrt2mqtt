@@ -16,8 +16,8 @@ class WiFiDevice < ApplicationRecord
   mqtt_attribute :ip_address, :sensor, -> { ipv4_address || ipv6_address }, entity_category: :diagnostic
   mqtt_attribute :last_seen_at, :sensor, device_class: :timestamp, entity_category: :diagnostic
   mqtt_attribute :label, :sensor, -> { labels&.first }, attributes: -> { { labels: } }, entity_category: :diagnostic
-  mqtt_attribute :online, :binary_sensor, -> { last_seen_at > 2.minutes.ago }, device_class: :connectivity
-  mqtt_attribute :state, :device_tracker, -> { last_seen_at > 2.minutes.ago ? :home : :not_home },
+  mqtt_attribute :online, :binary_sensor, -> { last_seen_at > 5.minutes.ago }, device_class: :connectivity
+  mqtt_attribute :state, :device_tracker, -> { last_seen_at > 5.minutes.ago ? :home : :not_home },
                  attributes: -> { {
                    mac_address:,
                    ip_address: ipv4_address || ipv6_address,
