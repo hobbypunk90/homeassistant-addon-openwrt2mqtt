@@ -3,7 +3,7 @@
 class WiFiDevice < ApplicationRecord
   include MQTTable
 
-  belongs_to :wifi_network, class_name: "WiFiNetwork", foreign_key: :wi_fi_network_id
+  belongs_to :wifi_network, class_name: "WiFiNetwork", foreign_key: :wi_fi_network_id, touch: true
   has_one :router, through: :wifi_network
 
   mqtt_device configuration_url: Settings.openwrt.url,

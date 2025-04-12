@@ -3,8 +3,8 @@
 class WiFiNetwork < ApplicationRecord
   include MQTTable
 
-  belongs_to :router
-  has_many :wifi_devices, class_name: "WiFiDevice"
+  belongs_to :router, touch: true
+  has_many :wifi_devices, class_name: "WiFiDevice", dependent: :destroy
 
   mqtt_device configuration_url: Settings.openwrt.url,
               name: -> { "#{network_name} (#{frequency} GHz)" },

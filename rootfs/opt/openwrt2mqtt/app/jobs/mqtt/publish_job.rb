@@ -1,17 +1,13 @@
 class Mqtt::PublishJob < ApplicationJob
-  queue_as :mqtt
+  queue_as :'mqtt/publish'
 
   def perform(topic, payload)
     payload = payload.to_json if payload.is_a?(Hash) || payload.is_a?(Array)
 
-    client.publish(topic, payload, retain)
+    HomeAssistantMqttPool.with { |connection| connection.publish(topic, payload, retain) }
   end
 
   private
-
-  def client
-    HomeAssistantMqttClient
-  end
 
   def retain
     Settings.mqtt.retain

@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 module MQTTable
-  def self.included(base)
-    # base is our target class. Invoke `extend` on it and pass nested module with class methods.
-    base.extend ClassMethods
+  extend ActiveSupport::Concern
+  included do
+    mqtt_origin name: "OpenWRT 2 MQTT", sw_version: "dev",
+                url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
 
-    base.mqtt_origin name: "OpenWRT 2 MQTT",
-                     sw_version: "dev",
-                     url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
+    after_destroy :destroy_mqtt
   end
 
-  module ClassMethods
+  class_methods do
     attr_accessor :_mqtt_origin, :_mqtt_device, :_mqtt_components
 
     def mqtt_origin(**attributes)
@@ -34,10 +33,12 @@ module MQTTable
       }
     end
   end
+
   delegate :_mqtt_origin, :_mqtt_device, :_mqtt_components, to: :class
   alias mqtt_origin _mqtt_origin
   alias mqtt_device _mqtt_device
   alias mqtt_components _mqtt_components
+
 
   def mqtt_id
     self.valid? if id.nil?
@@ -75,7 +76,7 @@ module MQTTable
   end
 
   def discovery_components
-    mqtt_components.filter {|_, config| instance_exec(&config[:if])}.to_h do |attribute, config|
+    mqtt_components.filter { |_, config| instance_exec(&config[:if]) }.to_h do |attribute, config|
       unique_id = "#{mqtt_id}_#{attribute}"
       name = if config[:platform] == :device_tracker
                labels&.first { |label| label.start_with?("device_tracker.")&.gsub("device_tracker.", "") } ||
@@ -132,5 +133,13 @@ module MQTTable
                  end
 
     { state: value, attributes: attributes.to_json }
+  end
+
+  def destroy_mqtt
+    Mqtt::DeleteJob.perform_later(discovery_topic)
+
+    mqtt_components.filter { |_, config| instance_exec(&config[:if]) }.each_key do |attribute|
+      Mqtt::DeleteJob.perform_later(attribute_topic(attribute))
+    end
   end
 end

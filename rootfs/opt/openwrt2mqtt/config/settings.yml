@@ -11,6 +11,7 @@ mqtt:
   topics:
     discovery: homeassistant
     base: openwrt2mqtt
+delete_unseen_after_days: 1
 mac_resolver:
   url: https://www.macvendorlookup.com/
 debug: false

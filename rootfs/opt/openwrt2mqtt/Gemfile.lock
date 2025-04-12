@@ -329,6 +329,7 @@ DEPENDENCIES
   annotaterb (~> 4.14)
   brakeman
   config (~> 5.5)
+  connection_pool (~> 2.5)
   debug
   faraday (~> 2.12)
   mission_control-jobs (~> 1.0)

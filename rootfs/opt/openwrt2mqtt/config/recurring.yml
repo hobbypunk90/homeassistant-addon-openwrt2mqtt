@@ -1,4 +1,7 @@
 default: &default
+  clean_up:
+    class: CleanUpJob
+    schedule: every 5 minutes
   read_from_openwrt:
     class: CollectFromOpenWRTJob
     schedule: every 30 seconds

@@ -3,7 +3,7 @@
 class Router < ApplicationRecord
   include MQTTable
 
-  has_many :wifi_networks, class_name: "WiFiNetwork"
+  has_many :wifi_networks, class_name: "WiFiNetwork", dependent: :destroy
   has_many :wifi_devices, class_name: "WiFiDevice", through: :wifi_networks
 
   attribute :localtime

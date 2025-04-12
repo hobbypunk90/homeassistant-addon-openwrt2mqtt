@@ -39,3 +39,5 @@ gem "service_actor", "~> 4.0"
 gem "faraday", "~> 2.12"
 
 gem "mission_control-jobs", "~> 1.0"
+
+gem "connection_pool", "~> 2.5"
