@@ -20,19 +20,18 @@ declare APP__MQTT__RETAIN
 declare APP__DEBUG
 
 ## Get the 'message' key from the user config options.
-APP__OPENWRT__URL=$(bashio::config 'openwrt_url')
-APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_username')
-APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_password')
+export APP__OPENWRT__URL=$(bashio::config 'openwrt_url')
+export APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_username')
+export APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_password')
 
-APP__MQTT__HOST=$(bashio::config 'mqtt_host')
-APP__MQTT__PORT=$(bashio::config 'mqtt_port')
-APP__MQTT__USERNAME=$(bashio::config 'mqtt_username')
-APP__MQTT__PASSWORD=$(bashio::config 'mqtt_password')
-APP__MQTT__RETAIN=$(bashio::config 'mqtt_retain')
+export APP__MQTT__HOST=$(bashio::config 'mqtt_host')
+export APP__MQTT__PORT=$(bashio::config 'mqtt_port')
+export APP__MQTT__USERNAME=$(bashio::config 'mqtt_username')
+export APP__MQTT__PASSWORD=$(bashio::config 'mqtt_password')
+export APP__MQTT__RETAIN=$(bashio::config 'mqtt_retain')
 
-APP__DEBUG=$(bashio::config 'debug')
+export APP__DEBUG=$(bashio::config 'debug')
 
-bashio::log.info "APP__DEBUG=${APP__DEBUG}"
 bashio::log.info 'Link data dir'
 rm -fr /opt/openwrt2mqtt/storage
 ln -s /data /opt/openwrt2mqtt/storage
