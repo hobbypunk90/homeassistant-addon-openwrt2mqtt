@@ -36,13 +36,15 @@ bashio::log.info 'Link data dir'
 rm -fr /opt/openwrt2mqtt/storage
 ln -s /data /opt/openwrt2mqtt/storage
 
+cd /opt/openwrt2mqtt
+
 if [ ! -f storage/production.sqlite3 ]; then
     bashio::log.info 'Create OpenWRT 2 MQTT database ...'
-    /opt/openwrt2mqtt/bin/rails db:create
+    bin/rails db:create
 fi
 
 bashio::log.info 'Migrate OpenWRT 2 MQTT database ...'
-/opt/openwrt2mqtt/bin/rails db:migrate
+bin/rails db:migrate
 
 bashio::log.info 'Start OpenWRT 2 MQTT ...'
-/opt/openwrt2mqtt/bin/rails server
+bin/rails server
