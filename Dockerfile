@@ -4,7 +4,8 @@ FROM $BUILD_FROM
 
 RUN apk add build-base ruby ruby-dev yaml yaml-dev sqlite curl
 
-ENV RAILS_ENV="production" \
+ENV SECRET_KEY_BASE="DUMMY" \
+    RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
