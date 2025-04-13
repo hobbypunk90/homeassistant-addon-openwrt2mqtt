@@ -32,7 +32,7 @@ export APP__MQTT__RETAIN=$(bashio::config 'mqtt_retain')
 
 export APP__DEBUG=$(bashio::config 'debug')
 
-bashio::log.info "APP_DEBUG=${APP_DEBUG}"
+bashio::log.info "APP__DEBUG=${APP__DEBUG}"
 bashio::log.info 'Link data dir'
 rm -fr /opt/openwrt2mqtt/storage
 ln -s /data /opt/openwrt2mqtt/storage
