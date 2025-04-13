@@ -29,4 +29,7 @@ end
 
 HomeAssistantMqttPool = ConnectionPool.new(size: ENV.fetch("JOB_CONCURRENCY", 1) * 3, timeout: 5) { MQTTClientWrapper.new }
 HomeAssistantMqttPool.shutdown { |connection| connection.disconnect }
-Rails.logger.info Settings
+
+ENV.keys do |key|
+  pp ENV[key]
+end
