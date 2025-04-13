@@ -20,17 +20,17 @@ declare APP__MQTT__RETAIN
 declare APP__DEBUG
 
 ## Get the 'message' key from the user config options.
-export APP__OPENWRT__URL=$(bashio::config 'openwrt_url')
-export APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_username')
-export APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_password')
+APP__OPENWRT__URL=$(bashio::config 'openwrt_url')
+APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_username')
+APP__OPENWRT__USERNAME=$(bashio::config 'openwrt_password')
 
-export APP__MQTT__HOST=$(bashio::config 'mqtt_host')
-export APP__MQTT__PORT=$(bashio::config 'mqtt_port')
-export APP__MQTT__USERNAME=$(bashio::config 'mqtt_username')
-export APP__MQTT__PASSWORD=$(bashio::config 'mqtt_password')
-export APP__MQTT__RETAIN=$(bashio::config 'mqtt_retain')
+APP__MQTT__HOST=$(bashio::config 'mqtt_host')
+APP__MQTT__PORT=$(bashio::config 'mqtt_port')
+APP__MQTT__USERNAME=$(bashio::config 'mqtt_username')
+APP__MQTT__PASSWORD=$(bashio::config 'mqtt_password')
+APP__MQTT__RETAIN=$(bashio::config 'mqtt_retain')
 
-export APP__DEBUG=$(bashio::config 'debug')
+APP__DEBUG=$(bashio::config 'debug')
 
 bashio::log.info "APP__DEBUG=${APP__DEBUG}"
 bashio::log.info 'Link data dir'
@@ -41,11 +41,11 @@ cd /opt/openwrt2mqtt
 
 if [ ! -f storage/production.sqlite3 ]; then
     bashio::log.info 'Create OpenWRT 2 MQTT database ...'
-    bin/rails db:create
+    bundle exec rails db:create
 fi
 
 bashio::log.info 'Migrate OpenWRT 2 MQTT database ...'
-bin/rails db:migrate
+bundle exec rails db:migrate
 
 bashio::log.info 'Start OpenWRT 2 MQTT ...'
-bin/rails server
+bundle exec rails server
