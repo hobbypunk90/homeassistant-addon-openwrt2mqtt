@@ -31,5 +31,5 @@ HomeAssistantMqttPool = ConnectionPool.new(size: ENV.fetch("JOB_CONCURRENCY", 1)
 HomeAssistantMqttPool.shutdown { |connection| connection.disconnect }
 
 ENV.keys do |key|
-  pp ENV[key]
+  Rails.logger.info ENV[key]
 end
