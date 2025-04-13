@@ -1,12 +1,23 @@
 configuration:
-  password:
-    name: Passwort
-    description: Passwort zum Entschlüsseln der CA Daten
+  openwrt_url:
+    name: OpenWRT URL
+    description: Url to your router
+  openwrt_username:
+    name: OpenWRT Benutzername
+  openwrt_password:
+    name: OpenWRT Passwort
+  mqtt_host:
+    name: MQTT Host
+  mqtt_port:
+    name: MQTT Port
+  mqtt_username:
+    name: MQTT Benutzername
+  mqtt_password:
+    name: MQTT Passwort
+  mqtt_retain:
+    name: MQTT Retain
   debug:
     name: Debug
     description: Schalter um Debug Meldungen einzuschalten
-  root_ca_path:
-    name: Root CA Pfad
-    description: Pfad in dem die Root CA Datei abgelegt werden soll
 network:
-  9000/tcp: Authority port zur Generierung von Zertifikaten
+  3000/tcp: Web interface

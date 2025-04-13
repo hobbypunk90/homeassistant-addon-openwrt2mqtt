@@ -1,12 +1,23 @@
 configuration:
-  password:
-    name: Password
-    description: Password to encrypt the CA data
+  openwrt_url:
+    name: OpenWRT URL
+    description: Url to your router
+  openwrt_username:
+    name: OpenWRT Username
+  openwrt_password:
+    name: OpenWRT Password
+  mqtt_host:
+    name: MQTT Host
+  mqtt_port:
+    name: MQTT Port
+  mqtt_username:
+    name: MQTT Username
+  mqtt_password:
+    name: MQTT Password
+  mqtt_retain:
+    name: MQTT Retain
   debug:
     name: Debug
     description: Flag to enable debug messages
-  root_ca_path:
-    name: Root CA path
-    description: Path to save the root ca.
 network:
-  9000/tcp: Authority port for certificate generation
+  3000/tcp: Web interface

@@ -1,9 +1,9 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
-name: Luci 2 MQTT
-version: "0.0.1"
-slug: luci2mqtt
-description: Luci add-on to add openwrt information via mqtt.
-url: "https://github.com/hobbypunk90/homeassistant-addon-luci2mqtt"
+name: OpenWRT 2 MQTT
+version: "dev"
+slug: openwrt2mqtt
+description: OpenWRT add-on to add openwrt information via mqtt.
+url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
 arch:
   - armhf
   - armv7
@@ -13,11 +13,25 @@ arch:
 init: false
 map:
   - addon_config:rw
+ports:
+  3000/tcp: null
 options:
-  password: ""
+  openwrt_url: ""
+  openwrt_username: root
+  openwrt_password: ""
+  mqtt_host: core-mosquitto
+  mqtt_port: 1883
+  mqtt_username: mqtt
+  mqtt_password: mqtt
+  mqtt_retain: false
   debug: false
 schema:
-  password: password
-  debug: bool
-  root_ca_path: str
-#image: "ghcr.io/home-assistant/{arch}-addon-example"
+  openwrt_url: url
+  openwrt_username: str?
+  openwrt_password: password
+  mqtt_host: str
+  mqtt_port: port
+  mqtt_username: str
+  mqtt_password: password
+  mqtt_retain: bool?
+  debug: bool?
