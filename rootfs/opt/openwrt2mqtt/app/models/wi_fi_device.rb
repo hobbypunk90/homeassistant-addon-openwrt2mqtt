@@ -51,6 +51,7 @@ class WiFiDevice < ApplicationRecord
 end
 
 # ## Schema Information
+# Schema version: 20250416131910
 #
 # Table name: `wi_fi_devices`
 #
@@ -78,4 +79,8 @@ end
 #
 # * `wi_fi_network_id`:
 #     * **`wi_fi_network_id => wi_fi_networks.id`**
+#
+# ### Check Constraints
+#
+# * `labels_is_array`: `(JSON_TYPE(labels) = 'array')`
 #

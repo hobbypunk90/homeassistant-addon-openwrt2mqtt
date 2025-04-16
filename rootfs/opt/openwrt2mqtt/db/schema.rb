@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_05_132801) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_16_131910) do
   create_table "routers", id: :string, force: :cascade do |t|
     t.string "kernel"
     t.string "hostname"
@@ -23,6 +23,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_05_132801) do
     t.datetime "build_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "localtime"
+    t.integer "uptime"
+    t.decimal "load_last_min", precision: 4, scale: 2
+    t.decimal "load_last_5min", precision: 4, scale: 2
+    t.decimal "load_last_15min", precision: 4, scale: 2
+    t.integer "memory_total"
+    t.integer "memory_available"
+    t.integer "memory_shared"
+    t.integer "memory_buffered"
+    t.integer "memory_cached"
+    t.integer "fs_root_total"
+    t.integer "fs_root_free"
+    t.integer "fs_root_used"
   end
 
   create_table "wi_fi_devices", id: :string, force: :cascade do |t|
