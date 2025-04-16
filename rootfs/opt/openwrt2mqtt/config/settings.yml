@@ -2,6 +2,8 @@ openwrt:
   url: ~
   username: ~
   password: ~
+  latitude: ~
+  longitude: ~
 mqtt:
   host: ~
   port: 1883
@@ -15,3 +17,4 @@ delete_unseen_after_days: 1
 mac_resolver:
   url: https://www.macvendorlookup.com/
 debug: false
+version: dev

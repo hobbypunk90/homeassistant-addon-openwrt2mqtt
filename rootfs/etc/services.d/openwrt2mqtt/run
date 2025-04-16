@@ -17,6 +17,8 @@ openwrt:
   url: '$(bashio::config 'openwrt_url')'
   username: '$(bashio::config 'openwrt_username')'
   password: '$(bashio::config 'openwrt_password')'
+  latitude: '$(bashio::config 'openwrt_latitude')'
+  longitude: '$(bashio::config 'openwrt_longitude')'
 mqtt:
   host: '$(bashio::config 'mqtt_host')'
   port: $(bashio::config 'mqtt_port')

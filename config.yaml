@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: OpenWRT 2 MQTT
-version: "dev"
+version: 2025.04.01
 slug: openwrt2mqtt
 description: OpenWRT add-on to add openwrt information via mqtt.
 url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
@@ -19,6 +19,8 @@ options:
   openwrt_url: ""
   openwrt_username: root
   openwrt_password: ""
+  openwrt_latitude: null
+  openwrt_longitude: null
   mqtt_host: core-mosquitto
   mqtt_port: 1883
   mqtt_username: mqtt
@@ -29,6 +31,8 @@ schema:
   openwrt_url: url
   openwrt_username: str?
   openwrt_password: password
+  openwrt_latitude: float?
+  openwrt_longitude: float?
   mqtt_host: str
   mqtt_port: port
   mqtt_username: str

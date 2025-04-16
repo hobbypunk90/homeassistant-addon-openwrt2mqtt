@@ -3,7 +3,7 @@
 module MQTTable
   extend ActiveSupport::Concern
   included do
-    mqtt_origin name: "OpenWRT 2 MQTT", sw_version: "dev",
+    mqtt_origin name: "OpenWRT 2 MQTT", sw_version: Settings.version,
                 url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
 
     after_destroy :destroy_mqtt
