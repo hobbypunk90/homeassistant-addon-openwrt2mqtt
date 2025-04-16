@@ -1,4 +1,4 @@
-# Luci2MQTT Addon
+# OpenWRT2MQTT Addon
 
 Uses the OpenWRT Luci API to bring OpenWRT Router information to your home assistant.
 
