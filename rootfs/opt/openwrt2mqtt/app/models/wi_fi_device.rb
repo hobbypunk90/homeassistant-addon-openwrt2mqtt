@@ -13,7 +13,8 @@ class WiFiDevice < ApplicationRecord
               via_device: -> { wifi_network.mqtt_id }
 
   mqtt_attribute :mac_address, :sensor, entity_category: :diagnostic
-  mqtt_attribute :ip_address, :sensor, -> { ipv4_address || ipv6_address }, entity_category: :diagnostic
+  mqtt_attribute :ipv4_address, :sensor, -> { ipv4_address }, entity_category: :diagnostic
+  mqtt_attribute :ipv6_address, :sensor, -> { ipv6_address }, entity_category: :diagnostic
   mqtt_attribute :last_seen_at, :sensor, device_class: :timestamp, entity_category: :diagnostic
   mqtt_attribute :label, :sensor, -> { labels&.first }, attributes: -> { { labels: } }, entity_category: :diagnostic
   mqtt_attribute :online, :binary_sensor, -> { online? }, device_class: :connectivity
