@@ -1,11 +1,14 @@
 configuration:
   openwrt_url:
     name: OpenWRT URL
-    description: Url to your router
+    description: Url deines Routers
   openwrt_username:
     name: OpenWRT Benutzername
   openwrt_password:
     name: OpenWRT Passwort
+  openwrt_sysupgrade_attended:
+    name: OpenWRT Sysupgrade Attended
+    description: Verweis zur sysupgrade attended update Seite, anstatt zu den Versionshinweisen
   mqtt_host:
     name: MQTT Host
   mqtt_port:

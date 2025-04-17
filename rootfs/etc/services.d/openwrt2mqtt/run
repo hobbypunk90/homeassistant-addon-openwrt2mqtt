@@ -19,6 +19,8 @@ openwrt:
   password: '$(bashio::config 'openwrt_password')'
   latitude: '$(bashio::config 'openwrt_latitude')'
   longitude: '$(bashio::config 'openwrt_longitude')'
+  sysupgrade:
+    attended: '$(bashio::config 'openwrt_sysupgrade_attended')'
 mqtt:
   host: '$(bashio::config 'mqtt_host')'
   port: $(bashio::config 'mqtt_port')

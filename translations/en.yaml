@@ -6,6 +6,9 @@ configuration:
     name: OpenWRT Username
   openwrt_password:
     name: OpenWRT Password
+  openwrt_sysupgrade_attended:
+    name: OpenWRT Sysupgrade Attended
+    description: Link to sysupgrade attended update page instead of release notes
   mqtt_host:
     name: MQTT Host
   mqtt_port:

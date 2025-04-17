@@ -3,8 +3,10 @@
 ## 2025.04.02
 
 - Change logo & icon
+- Router:
+  - Add upadte entity
 - Devices:
-    - Send ipv4 & ipv6 instead of only one ip address 
+  - Send ipv4 & ipv6 instead of only one ip address 
 
 ## 2025.04.01
 

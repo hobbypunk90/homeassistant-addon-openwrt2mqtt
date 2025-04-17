@@ -21,6 +21,7 @@ options:
   openwrt_password: ""
   openwrt_latitude: null
   openwrt_longitude: null
+  openwrt_sysupgrade_attended: false
   mqtt_host: core-mosquitto
   mqtt_port: 1883
   mqtt_username: mqtt
@@ -33,6 +34,7 @@ schema:
   openwrt_password: password
   openwrt_latitude: float?
   openwrt_longitude: float?
+  openwrt_sysupgrade_attended: bool?
   mqtt_host: str
   mqtt_port: port
   mqtt_username: str
