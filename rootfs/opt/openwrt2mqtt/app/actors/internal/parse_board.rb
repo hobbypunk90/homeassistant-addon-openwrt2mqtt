@@ -4,16 +4,9 @@ class Internal::ParseBoard < ApplicationActor
   prepend WhosGonnaCallMe
 
   input :board
-  output :router
+  input :router
 
   def call
-    id = begin
-           router = Router.new
-           router.valid?
-           router.id
-         end
-
-    self.router = router = Router.find_or_initialize_by(id:)
     router.kernel = board[:kernel]
     router.hostname = board[:hostname]
     router.system = board[:system]

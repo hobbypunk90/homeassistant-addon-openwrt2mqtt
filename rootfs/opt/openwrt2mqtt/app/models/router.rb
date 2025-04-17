@@ -12,6 +12,20 @@ class Router < ApplicationRecord
               model_id: :board_name,
               name: :hostname,
               sw_version: -> { "#{os} #{os_version}" }
+
+  mqtt_attribute :update, :update, lambda {
+    release_url = if Settings.openwrt.sysupgrade.attended
+                    "#{Settings.openwrt.url}/cgi-bin/luci/admin/system/attendedsysupgrade"
+                  else
+                    major, minor, bugfix = Gem::Version.new(os_version_latest).canonical_segments
+                    "https://openwrt.org/releases/#{major}.#{minor}/notes-#{major}.#{minor}.#{bugfix}"
+                  end
+    {
+      installed_version: os_version,
+      latest_version: os_version_latest,
+      release_url:
+    }
+  }, entity_picture: "#{Settings.openwrt.url}/luci-static/bootstrap/logo.svg"
   mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }
   mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }
 
@@ -48,37 +62,38 @@ class Router < ApplicationRecord
 end
 
 # ## Schema Information
-# Schema version: 20250416131910
+# Schema version: 20250417075656
 #
 # Table name: `routers`
 #
 # ### Columns
 #
-# Name                    | Type               | Attributes
-# ----------------------- | ------------------ | ---------------------------
-# **`id`**                | `string`           | `not null, primary key`
-# **`board_name`**        | `string`           |
-# **`build_date`**        | `datetime`         |
-# **`fs_root_free`**      | `integer`          |
-# **`fs_root_total`**     | `integer`          |
-# **`fs_root_used`**      | `integer`          |
-# **`hostname`**          | `string`           |
-# **`kernel`**            | `string`           |
-# **`load_last_15min`**   | `decimal(4, 2)`    |
-# **`load_last_5min`**    | `decimal(4, 2)`    |
-# **`load_last_min`**     | `decimal(4, 2)`    |
-# **`localtime`**         | `datetime`         |
-# **`manufacturer`**      | `string`           |
-# **`memory_available`**  | `integer`          |
-# **`memory_buffered`**   | `integer`          |
-# **`memory_cached`**     | `integer`          |
-# **`memory_shared`**     | `integer`          |
-# **`memory_total`**      | `integer`          |
-# **`model`**             | `string`           |
-# **`os`**                | `string`           |
-# **`os_version`**        | `string`           |
-# **`system`**            | `string`           |
-# **`uptime`**            | `integer`          |
-# **`created_at`**        | `datetime`         | `not null`
-# **`updated_at`**        | `datetime`         | `not null`
+# Name                     | Type               | Attributes
+# ------------------------ | ------------------ | ---------------------------
+# **`id`**                 | `string`           | `not null, primary key`
+# **`board_name`**         | `string`           |
+# **`build_date`**         | `datetime`         |
+# **`fs_root_free`**       | `integer`          |
+# **`fs_root_total`**      | `integer`          |
+# **`fs_root_used`**       | `integer`          |
+# **`hostname`**           | `string`           |
+# **`kernel`**             | `string`           |
+# **`load_last_15min`**    | `decimal(4, 2)`    |
+# **`load_last_5min`**     | `decimal(4, 2)`    |
+# **`load_last_min`**      | `decimal(4, 2)`    |
+# **`localtime`**          | `datetime`         |
+# **`manufacturer`**       | `string`           |
+# **`memory_available`**   | `integer`          |
+# **`memory_buffered`**    | `integer`          |
+# **`memory_cached`**      | `integer`          |
+# **`memory_shared`**      | `integer`          |
+# **`memory_total`**       | `integer`          |
+# **`model`**              | `string`           |
+# **`os`**                 | `string`           |
+# **`os_version`**         | `string`           |
+# **`os_version_latest`**  | `string`           |
+# **`system`**             | `string`           |
+# **`uptime`**             | `integer`          |
+# **`created_at`**         | `datetime`         | `not null`
+# **`updated_at`**         | `datetime`         | `not null`
 #

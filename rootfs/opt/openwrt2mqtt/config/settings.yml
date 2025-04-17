@@ -4,6 +4,9 @@ openwrt:
   password: ~
   latitude: ~
   longitude: ~
+  sysupgrade:
+    url: https://sysupgrade.openwrt.org/json/v1/overview.json
+    attended: false
 mqtt:
   host: ~
   port: 1883

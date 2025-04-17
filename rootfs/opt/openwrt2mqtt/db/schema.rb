@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_17_073425) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_17_075656) do
   create_table "routers", id: :string, force: :cascade do |t|
     t.string "kernel"
     t.string "hostname"
@@ -36,6 +36,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_17_073425) do
     t.integer "fs_root_total"
     t.integer "fs_root_free"
     t.integer "fs_root_used"
+    t.string "os_version_latest"
   end
 
   create_table "wi_fi_devices", id: :string, force: :cascade do |t|
