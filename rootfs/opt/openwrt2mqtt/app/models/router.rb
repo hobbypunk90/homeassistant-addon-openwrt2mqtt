@@ -26,14 +26,14 @@ class Router < ApplicationRecord
       release_url:
     }
   }, entity_picture: "#{Settings.openwrt.url}/luci-static/bootstrap/logo.svg"
-  mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }
-  mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }
+  mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }, state_class: :measurement
+  mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }, state_class: :measurement
 
   mqtt_attribute :uptime, :sensor, device_class: :duration, unit_of_measurement: :s, entity_category: :diagnostic
 
-  mqtt_attribute :load_last_min, :sensor, entity_category: :diagnostic
-  mqtt_attribute :load_last_5min, :sensor, entity_category: :diagnostic
-  mqtt_attribute :load_last_15min, :sensor, entity_category: :diagnostic
+  mqtt_attribute :load_last_min, :sensor, state_class: :measurement, entity_category: :diagnostic
+  mqtt_attribute :load_last_5min, :sensor, state_class: :measurement, entity_category: :diagnostic
+  mqtt_attribute :load_last_15min, :sensor, state_class: :measurement, entity_category: :diagnostic
 
   mqtt_attribute :memory_total, :sensor, device_class: :data_size, unit_of_measurement: :B, entity_category: :diagnostic
   mqtt_attribute :memory_available, :sensor, device_class: :data_size, unit_of_measurement: :B, entity_category: :diagnostic
