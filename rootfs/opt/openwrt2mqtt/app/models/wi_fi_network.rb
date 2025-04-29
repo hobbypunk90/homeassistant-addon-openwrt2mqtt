@@ -16,7 +16,7 @@ class WiFiNetwork < ApplicationRecord
   mqtt_attribute :network_name, :sensor
   mqtt_attribute :device, :sensor
   mqtt_attribute :frequency, :sensor, device_class: :frequency, unit_of_measurement: :GHz
-  mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }
+  mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }, state_class: :measurement
   mqtt_attribute :mac_address, :sensor, :access_point
   mqtt_attribute :channel, :sensor
   mqtt_attribute :ht_mode, :sensor
