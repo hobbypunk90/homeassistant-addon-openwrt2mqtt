@@ -23,9 +23,9 @@ class WiFiDevice < ApplicationRecord
                    mac_address:,
                    ip_address: ipv4_address || ipv6_address,
                    hostname:,
-                   latitude: Settings.openwrt.latitude,
-                   longitude: Settings.openwrt.longitude,
-                   gps_accuracy: (0.0 if Settings.openwrt.latitude)
+                   latitude: (Settings.openwrt.latitude.to_f if Settings.openwrt.latitude && Settings.openwrt.longitude),
+                   longitude: (Settings.openwrt.longitude.to_f if Settings.openwrt.latitude && Settings.openwrt.longitude),
+                   gps_accuracy: (0.0 if Settings.openwrt.latitude && Settings.openwrt.longitude)
                  }.compact },
                  if: -> { labels&.any? { |label| label.start_with?("device_tracker") } }
   validates :labels, presence: true, if: -> { labels.nil? }

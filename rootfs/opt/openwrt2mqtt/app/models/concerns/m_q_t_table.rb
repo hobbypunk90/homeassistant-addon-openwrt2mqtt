@@ -63,7 +63,7 @@ module MQTTable
       else
         value
       end
-    end
+    end.compact
 
     {
       origin: mqtt_origin,

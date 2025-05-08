@@ -1,5 +1,10 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2025.05.01
+
+- Convert corrdinates to float
+- remove null device attributes
+
 ## 2025.04.03
 
 - Use messurement state class for some router and network entities
