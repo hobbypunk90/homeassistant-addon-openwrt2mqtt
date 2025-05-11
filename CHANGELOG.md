@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2025.05.02
+
+- Raise threads
+
 ## 2025.05.01
 
 - Convert corrdinates to float
