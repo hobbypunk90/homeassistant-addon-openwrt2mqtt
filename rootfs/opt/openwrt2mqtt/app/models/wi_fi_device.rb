@@ -19,14 +19,14 @@ class WiFiDevice < ApplicationRecord
   mqtt_attribute :label, :sensor, -> { labels&.first }, attributes: -> { { labels: } }, entity_category: :diagnostic
   mqtt_attribute :online, :binary_sensor, -> { online? }, device_class: :connectivity
   mqtt_attribute :state, :device_tracker, -> { online? ? :home : :not_home },
-                 attributes: -> { {
+                 attributes: -> { online? ? {
                    mac_address:,
                    ip_address: ipv4_address || ipv6_address,
                    hostname:,
                    latitude: (Settings.openwrt.latitude.to_f if Settings.openwrt.latitude && Settings.openwrt.longitude),
                    longitude: (Settings.openwrt.longitude.to_f if Settings.openwrt.latitude && Settings.openwrt.longitude),
                    gps_accuracy: (0.0 if Settings.openwrt.latitude && Settings.openwrt.longitude)
-                 }.compact },
+                 }.compact : {} },
                  if: -> { labels&.any? { |label| label.start_with?("device_tracker") } }
   validates :labels, presence: true, if: -> { labels.nil? }
 
