@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2025.05.04
+
+- Add sysupgrade timeout & handle it
+
 ## 2025.05.03
 
 - Fix atrtibutes for not home devices

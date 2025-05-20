@@ -6,7 +6,9 @@ class Luci::Internal::GetLatestVersionData < Luci::Actor
   output :latest_version_data
 
   def call
-    self.latest_version_data = JSON.parse(Faraday.get(Settings.openwrt.sysupgrade.url).body)
-                                   .with_indifferent_access
+    body = Faraday.new { |conn| conn.options.timeout = 5 }.get(Settings.openwrt.sysupgrade.url).body
+    self.latest_version_data = JSON.parse(body).with_indifferent_access
+  rescue Faraday::ConnectionFailed
+    self.latest_version_data = nil
   end
 end

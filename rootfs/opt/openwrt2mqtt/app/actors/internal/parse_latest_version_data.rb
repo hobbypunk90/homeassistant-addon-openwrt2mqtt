@@ -7,7 +7,7 @@ class Internal::ParseLatestVersionData < ApplicationActor
   input :router
 
   def call
-    router.os_version_latest = latest_version_data[:latest].first
+    router.os_version_latest = latest_version_data[:latest].first if latest_version_data.present?
     router.save!
   end
 end

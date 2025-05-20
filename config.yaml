@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: OpenWRT 2 MQTT
-version: 2025.05.03
+version: 2025.05.04
 slug: openwrt2mqtt
 description: OpenWRT add-on to add openwrt information via mqtt.
 url: "https://github.com/hobbypunk90/homeassistant-addon-openwrt2mqtt"
