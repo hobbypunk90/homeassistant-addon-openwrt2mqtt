@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2025.06.01
+
+- Add solid queue clean up job
+
 ## 2025.05.04
 
 - Add sysupgrade timeout & handle it
