@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2025.06.02
+
+- Delete daily all old jobs
+
 ## 2025.06.01
 
 - Add solid queue clean up job
