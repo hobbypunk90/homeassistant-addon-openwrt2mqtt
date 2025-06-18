@@ -1,7 +1,7 @@
 default: &default
-  clear_finished_in_batches_job:
-    class: ClearFinishedInBatchesJob
-    schedule: every sunday at 1am
+  clear_in_batches_job:
+    class: ClearInBatchesJob
+    schedule: every day at 1am
   clean_up:
     class: CleanUpJob
     schedule: every 1 hour
