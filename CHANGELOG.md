@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2025.12.01
+
+- Add support for internet-detector (https://github.com/gSpotx2f/luci-app-internet-detector)
+
 ## 2025.06.02
 
 - Delete daily all old jobs
