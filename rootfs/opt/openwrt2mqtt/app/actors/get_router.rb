@@ -5,8 +5,10 @@ class GetRouter < Actor
        Luci::Internal::GetSystemBoard,
        Luci::Internal::GetSystemInfo,
        Luci::Internal::GetLatestVersionData,
+       Luci::Internal::GetWanStatus,
        Internal::GetRouter,
        Internal::ParseBoard,
        Internal::ParseSystemInfo,
-       Internal::ParseLatestVersionData
+       Internal::ParseLatestVersionData,
+       Internal::ParseWanStatus
 end

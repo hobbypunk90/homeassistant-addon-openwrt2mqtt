@@ -16,6 +16,13 @@ class Luci::Actor < ApplicationActor
     raise StandardError, response[:error][:message]
   end
 
+  def ubus(method, params = [])
+    ubus_session = self.ubus_session ? self.ubus_session : '00000000000000000000000000000000'
+
+    response = connection.post('/ubus', { id: 1, jsonrpc: '2.0', method:, params: [ubus_session] + params }.to_json)
+    response = JSON.parse(response.body).with_indifferent_access
+  end
+
   private
 
   def id

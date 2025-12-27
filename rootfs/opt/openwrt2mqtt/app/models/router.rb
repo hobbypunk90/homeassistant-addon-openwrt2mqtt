@@ -26,6 +26,9 @@ class Router < ApplicationRecord
       release_url:
     }
   }, entity_picture: "#{Settings.openwrt.url}/luci-static/bootstrap/logo.svg"
+  mqtt_attribute :wan_online, :binary_sensor, device_class: :connectivity
+  mqtt_attribute :wan_ipv4_address, :sensor
+
   mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }, state_class: :measurement
   mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }, state_class: :measurement
 
@@ -62,7 +65,7 @@ class Router < ApplicationRecord
 end
 
 # ## Schema Information
-# Schema version: 20250417075656
+# Schema version: 20251227200257
 #
 # Table name: `routers`
 #
@@ -94,6 +97,8 @@ end
 # **`os_version_latest`**  | `string`           |
 # **`system`**             | `string`           |
 # **`uptime`**             | `integer`          |
+# **`wan_ipv4_address`**   | `string`           |
+# **`wan_online`**         | `boolean`          |
 # **`created_at`**         | `datetime`         | `not null`
 # **`updated_at`**         | `datetime`         | `not null`
 #
