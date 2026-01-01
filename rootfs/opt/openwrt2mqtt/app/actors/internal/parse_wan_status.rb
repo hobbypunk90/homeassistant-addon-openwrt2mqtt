@@ -7,7 +7,7 @@ class Internal::ParseWanStatus < ApplicationActor
   input :router
 
   def call
-    router.wan_online = wan_status[:inet] == 0 ? :online : :offline
+    router.wan_online = wan_status[:inet] == 0
     router.wan_ipv4_address = router.wan_online? ? wan_status[:mod_public_ip] : nil
 
     router.save!

@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2026.01.01
+
+- Bugfix in online detection
+
 ## 2025.12.01
 
 - Add support for internet-detector (https://github.com/gSpotx2f/luci-app-internet-detector)
