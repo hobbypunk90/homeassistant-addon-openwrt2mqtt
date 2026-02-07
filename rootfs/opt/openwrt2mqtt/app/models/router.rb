@@ -30,6 +30,7 @@ class Router < ApplicationRecord
   mqtt_attribute :wan_ipv4_address, :sensor
 
   mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }, state_class: :measurement
+  mqtt_attribute :wifi_online_devices, :sensor, -> { wifi_devices.filter(&:online?).size }, state_class: :measurement
   mqtt_attribute :wifi_devices, :sensor, -> { wifi_devices.size }, state_class: :measurement
 
   mqtt_attribute :uptime, :sensor, device_class: :duration, unit_of_measurement: :s, entity_category: :diagnostic
