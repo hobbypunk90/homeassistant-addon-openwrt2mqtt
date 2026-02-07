@@ -1,5 +1,10 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2026.02.03
+
+- Add online device count
+- Better wan status support. Uses mwan3 and optinal internet detector
+
 ## 2026.01.01
 
 - Bugfix in online detection
