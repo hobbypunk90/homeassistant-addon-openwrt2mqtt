@@ -18,7 +18,7 @@ class Mqtt::PublishAllJob < ApplicationJob
 
   def publish(object)
     object.mqtt_components.each do |attribute, config|
-      next unless object.instance_exec(&config[:if])
+      next unless config[:if].nil? || object.instance_exec(&config[:if])
 
       Mqtt::PublishJob.perform_later(object.attribute_topic(attribute), object.attribute_value(attribute))
     end

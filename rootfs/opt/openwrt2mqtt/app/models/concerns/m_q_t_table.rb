@@ -76,7 +76,7 @@ module MQTTable
   end
 
   def discovery_components
-    mqtt_components.filter { |_, config| instance_exec(&config[:if]) }.to_h do |attribute, config|
+    mqtt_components.filter { |_, config| config[:if].nil? || instance_exec(&config[:if]) }.to_h do |attribute, config|
       unique_id = "#{mqtt_id}_#{attribute}"
       name = if config[:platform] == :device_tracker
                labels&.first { |label| label.start_with?("device_tracker.")&.gsub("device_tracker.", "") } ||
@@ -98,8 +98,8 @@ module MQTTable
     end
   end
 
-  def attribute_topic(attribute)
-    platform = mqtt_components[attribute][:platform]
+  def attribute_topic(attribute, platform = nil)
+    platform = mqtt_components[attribute][:platform] if platform.nil?
 
     "#{Settings.mqtt.topics.base}/#{platform}/#{mqtt_id}/#{attribute}"
   end

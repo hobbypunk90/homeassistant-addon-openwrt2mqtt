@@ -26,8 +26,6 @@ class Router < ApplicationRecord
       release_url:
     }
   }, entity_picture: "#{Settings.openwrt.url}/luci-static/bootstrap/logo.svg"
-  mqtt_attribute :wan_online, :binary_sensor, device_class: :connectivity
-  mqtt_attribute :wan_ipv4_address, :sensor
 
   mqtt_attribute :wifi_networks, :sensor, -> { wifi_networks.size }, state_class: :measurement
   mqtt_attribute :wifi_online_devices, :sensor, -> { wifi_devices.filter(&:online?).size }, state_class: :measurement
@@ -53,6 +51,26 @@ class Router < ApplicationRecord
     self.id = Digest::SHA1.hexdigest("#{Settings.openwrt.url},#{Settings.openwrt.username}")
   end
 
+  def mqtt_components
+    components = super
+
+    (wan_interfaces || []).each do |interface, attributes|
+      components[:"#{interface}_online"] = {
+        name: "#{interface} online".humanize,
+        value: (attributes["status"] == "online"),
+        platform: :binary_sensor,
+        device_class: :connectivity
+      }
+      components[:"#{interface}_public_ip"] = {
+        name: "#{interface} public ip".humanize,
+        value: attributes["public_ip"],
+        platform: :sensor
+      }
+    end
+
+    components
+  end
+
   def to_s
     <<~MSG
       Device[#{hostname}]: <#{model}>
@@ -66,7 +84,7 @@ class Router < ApplicationRecord
 end
 
 # ## Schema Information
-# Schema version: 20251227200257
+# Schema version: 20260207200200
 #
 # Table name: `routers`
 #
@@ -98,8 +116,7 @@ end
 # **`os_version_latest`**  | `string`           |
 # **`system`**             | `string`           |
 # **`uptime`**             | `integer`          |
-# **`wan_ipv4_address`**   | `string`           |
-# **`wan_online`**         | `boolean`          |
+# **`wan_interfaces`**     | `json`             |
 # **`created_at`**         | `datetime`         | `not null`
 # **`updated_at`**         | `datetime`         | `not null`
 #
