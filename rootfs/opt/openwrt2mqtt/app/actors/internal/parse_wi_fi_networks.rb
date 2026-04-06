@@ -16,7 +16,7 @@ class Internal::ParseWiFiNetworks < ApplicationActor
   def parse_wifi_network(text)
     wifi = WiFiNetwork.find_or_initialize_by(device: text[/^([a-z0-9\-]+)/, 1],
                                              network_name: text[/ESSID: "(.+)"$/, 1],
-                                             access_point: text[/Access Point: ([0-9A-F:]+)/, 1])
+                                             access_point: text[/Access Point: ([0-9A-Fa-f:]+)/, 1].upcase)
     wifi.channel = (text[/Channel: ([0-9]+) \(([0-9.]+) GHz\)\s+HT Mode: ([A-Z0-9]+)/, 1]).to_i
     wifi.frequency = (text[/Channel: ([0-9]+) \(([0-9.]+) GHz\)\s+HT Mode: ([A-Z0-9]+)/, 2]).to_f
     wifi.ht_mode = text[/Channel: ([0-9]+) \(([0-9.]+) GHz\)\s+HT Mode: ([A-Z0-9]+)/, 3]

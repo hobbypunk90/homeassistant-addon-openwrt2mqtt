@@ -16,7 +16,7 @@ class Internal::ParseWiFiDevices < ApplicationActor
   private
 
   def parse_wifi_device(text)
-    mac_address = text[/^([A-F0-9:]+)/, 1]
+    mac_address = text[/^([0-9A-Fa-f:]+)/, 1].upcase
     dhcp_static_lease = dhcp_static_leases
                           .filter { |entry| entry[:mac].include? mac_address }
                           &.first || {}

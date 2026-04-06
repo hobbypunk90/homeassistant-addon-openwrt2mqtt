@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 2026.04.01
+
+- Fix broken mac detection
+
 ## 2026.02.03
 
 - Add online device count
