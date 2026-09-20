@@ -10,6 +10,7 @@ class WiFiDevice < ApplicationRecord
               name: :hostname,
               manufacturer: -> { GetMacVendor.call(mac_address:).vendor_name },
               model_id: :mac_address,
+              connections: -> { [[:mac, mac_address]] },
               via_device: -> { wifi_network.mqtt_id }
 
   mqtt_attribute :mac_address, :sensor, entity_category: :diagnostic
